@@ -1,0 +1,33 @@
+variables:
+KUBE_CONTEXT: netcon2/k8s:k8s-connection
+CI_PROJECT_DIR: k8s
+
+stages:
+- build
+- deploy
+
+build_image:
+stage: build
+image: docker:20.10.16
+services:
+- docker:20.10.16-dind
+before_script:
+- docker login -u $REG_USER -p $REG_PASSWD $CI_REG
+script:
+- docker build -t $CI_REG/netcon2/k8s-data/web .
+- docker push $CI_REG/netcon2/k8s-data/web
+
+deploy_server:
+stage: deploy
+image:
+name: bitnami/kubectl:latest
+entrypoint: ['']
+script:
+- kubectl config use-context $KUBE_CONTEXT
+- kubectl get pods
+- kubectl get node -o wide
+- kubectl apply -f $CI_PROJECT_DIR/svc.yaml
+- kubectl apply -f $CI_PROJECT_DIR/secret.yaml
+- kubectl apply -f $CI_PROJECT_DIR/pod.yaml
+- kubectl get pod
+- kubectl get svc

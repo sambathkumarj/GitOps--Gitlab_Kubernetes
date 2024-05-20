@@ -33,8 +33,8 @@ jobs:
        
       - name: Push docker image
         run: |
-          docker images
-          docker push sambathkumarj/cicdpipeline:latest
+          docker images | grep sambath
+#          docker push sambathkumarj/cicdpipeline:latest
           
           
 

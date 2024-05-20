@@ -31,7 +31,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
        
       - name: Push docker image
-        run: docker push sambathkumarj/cicdpipeline
+        run: docker images
+#        run: docker push sambathkumarj/cicdpipeline
           
           
 

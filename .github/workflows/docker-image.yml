@@ -32,8 +32,9 @@ jobs:
           
        
       - name: Push docker image
-        run: docker images
-             docker push sambathkumarj/cicdpipeline:latest
+        run: |
+          docker images
+          docker push sambathkumarj/cicdpipeline:latest
           
           
 

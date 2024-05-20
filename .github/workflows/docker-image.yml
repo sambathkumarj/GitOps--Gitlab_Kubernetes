@@ -15,24 +15,25 @@ jobs:
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-#      -
-#        name: Login to Docker Hub
-#        uses: docker/login-action@v3
-#        with:
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          image: sambathkumarj/cicdpipeline
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          context: .
+          push: true
+          tags: sambathkumarj/cicdpipeline:latest
+          
        
       - name: Push docker image
         run: docker images
-#        run: docker push sambathkumarj/cicdpipeline
+             docker push sambathkumarj/cicdpipeline:latest
           
           
 

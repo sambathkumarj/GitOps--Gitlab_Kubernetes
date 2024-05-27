@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Run') {
             steps {
-                checkout scm
+                echo 'Basic running test...'
             }
         }
 
@@ -14,8 +14,8 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Deploy') {
             steps {
-                echo 'Running tests...'
+                echo 'Running deploying server...'
             }
         }

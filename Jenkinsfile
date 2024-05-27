@@ -7,7 +7,7 @@ pipeline {
                 echo 'Basic running test...'
             }
         }
-    }
+
 
         stage("test") {
             steps {    
@@ -20,4 +20,5 @@ pipeline {
                 echo 'Running deploying server...'
             }
         }
+    }
 }

@@ -7,6 +7,7 @@ pipeline {
                 echo 'Basic running test...'
             }
         }
+    }
 
         stage('Build') {
             steps {    

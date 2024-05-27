@@ -5,7 +5,7 @@ pipeline {
         // Define environment variables
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_REPO = 'sambathkumarj'
-        DOCKER_IMAGE = 'jenkinpipeline'
+        DOCKER_IMAGE = 'jenkincicd'
         DOCKER_CREDENTIALS_ID = 'dockerhub'
     }
 

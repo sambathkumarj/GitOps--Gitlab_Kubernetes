@@ -12,14 +12,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from the repository
                 checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                // Build the Docker image
                 script {
                     dockerImage = docker.build("${DOCKER_REGISTRY}/${DOCKER_REPO}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
                 }
@@ -28,16 +26,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Run your tests here
                 echo 'Running tests...'
-                // Example: dockerImage.inside { sh 'make test' }
             }
         }
 
         stage('Push') {
             steps {
                 script {
-                    // Push the Docker image to the registry
                     docker.withRegistry("https://${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
                         dockerImage.push()
                     }
@@ -47,7 +42,6 @@ pipeline {
 
         stage('Cleanup') {
             steps {
-                // Clean up the local Docker environment
                 sh 'docker rmi ${DOCKER_REGISTRY}/${DOCKER_REPO}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}'
             }
         }
@@ -55,7 +49,6 @@ pipeline {
 
     post {
         always {
-            // Clean up workspace
             cleanWs()
         }
         success {

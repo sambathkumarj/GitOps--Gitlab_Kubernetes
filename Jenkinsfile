@@ -20,3 +20,4 @@ pipeline {
                 echo 'Running deploying server...'
             }
         }
+}

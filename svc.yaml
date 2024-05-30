@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: netflix-web
+  name: netflix-web
+spec:
+  ports:
+  - name: netflix-web
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: netflix
+  type: NodePort
+status:
+  loadBalancer: {}

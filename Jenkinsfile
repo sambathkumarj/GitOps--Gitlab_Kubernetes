@@ -1,11 +1,12 @@
 pipeline{
-	
- 	agent any
+
+	agent any
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
 
+	stages {
 		stage('Build') {
 
 			steps {
@@ -26,4 +27,5 @@ pipeline{
 				sh 'docker push sambathkumarj/jenkinargocd:latest'
 			}
 		}
+	}
 }

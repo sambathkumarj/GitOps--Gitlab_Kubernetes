@@ -1,24 +1,39 @@
-pipeline {
-    agent any
+pipeline{
+	
+ 	agent any
 
-    stages {
-        stage("build") {
-            steps {
-                echo 'Basic running test...'
-            }
-        }
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
 
+	stages {
+	    
+	    stage('gitclone') {
 
-        stage("test") {
-            steps {    
-                    echo 'Building test...' 
-            }
-        }
+			steps {
+				git 'https://github.com/sambathkumarj/Agro-CD-GitOps-K8S.git'
+			}
+		}
 
-        stage("deploy") {
-            steps {
-                echo 'Running deploying server...'
-            }
-        }
-    }
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t sambathkumarj/jenkinargocd:latest .'
+			}
+		}
+
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push sambathkumarj/jenkinargocd:latest'
+			}
+		}
+	}
 }

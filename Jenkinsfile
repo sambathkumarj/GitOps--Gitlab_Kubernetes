@@ -6,15 +6,6 @@ pipeline{
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
 
-	stages {
-	    
-	    stage('gitclone') {
-
-			steps {
-				git 'https://github.com/sambathkumarj/Agro-CD-GitOps-K8S.git'
-			}
-		}
-
 		stage('Build') {
 
 			steps {

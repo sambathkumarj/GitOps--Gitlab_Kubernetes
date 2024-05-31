@@ -26,5 +26,4 @@ pipeline{
 				sh 'docker push sambathkumarj/jenkinargocd:latest'
 			}
 		}
-	}
 }

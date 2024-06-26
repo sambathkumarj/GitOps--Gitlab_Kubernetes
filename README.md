@@ -8,6 +8,8 @@ Furthermore, by leveraging GitLab agents, we can seamlessly connect our Kubernet
 
 Stay tuned as we delve deeper into the intricacies of deploying Docker images to GitLab's container registry and establishing seamless connectivity with Kubernetes through GitLab agents, unlocking the full potential of modern DevOps practices.
 
+![Gitlab-docker-k8s](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/57e915c2-5bc5-4652-96d1-1d94084a75e4)
+
 Here’s a breakdown of GitLab, its CI/CD functionality, and key concepts like jobs, scripts, and stages:
 
 # GitLab
@@ -44,6 +46,7 @@ In GitLab CI/CD, variables are used to store information that can be used across
 3. Job Variables: These are defined within a specific job in the CI/CD configuration file and are only available within that job.
 
 
+
 # CI/CD Workflow:
 
 1. Commit: Developers commit code changes to the Git repository hosted on GitLab.
@@ -68,6 +71,8 @@ Firstly, we'll establish connectivity between GitLab and our Microk8s Kubernetes
 
 # Agent Access Token 
 
+![k8s-agent-token-helm](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/d7fed067-02c5-449e-8c6b-3cbe39812b40)
+
 ```
 glagent-mFZRcD-orADRvCUJyCp3MLgfWQUyocGRczyt3Hdwrqrrx-2ikw
 ```
@@ -85,6 +90,13 @@ helm upgrade --install k8s-connection gitlab/gitlab-agent \
     --set config.kasAddress=wss://kas.gitlab.com
 ```
 
+![connect-k8s-gitlab](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/8b3ca49f-190f-47bf-8956-3c9ed746e8fa)
+
+![connect-k8s-agent](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/519e1d53-bcfa-43de-b765-59de35f4ea16)
+
+![cluster-connected](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/387ed252-a6bc-4598-b18f-832d4cf2de7a)
+
+
 # Let build docker image using job (pipeline) 
 
 1. First login into the container registry in gitlab
@@ -98,6 +110,8 @@ docker build -t registry.gitlab.com/netcon2/<Project name> .
 3 . Push the image to the container registry
 
 docker push registry.gitlab.com/netcon2/<Project name>
+
+![add_container_reg_cluster](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/f03f14c9-4dd4-4eb5-a6f0-868428e51a09)
 
 # create a pipeline file as .git-ci.yml and copy & paste below commands
 
@@ -113,6 +127,10 @@ script:
 - docker build -t $CI_REG/netcon2/k8s-data/web .
 - docker push $CI_REG/netcon2/k8s-data/web
 ```
+
+![docker_image-gitlab-ci](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/a0ffe4f6-06f1-452b-aee2-8672a924cc18)
+
+
 
 # Creating Kubernetes agent config.yaml in Gitlab
 
@@ -166,6 +184,11 @@ script:
 - kubectl get svc
 ```
 
+![job_deployed_stages](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/608f1345-31d2-4bab-b8df-662f6e5e00ff)
+
+![job_status_2](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/78b68690-cd08-4a32-9d33-90e204650d3a)
+
+
 Next, armed with YAML files defining the desired state of our Kubernetes resources, we'll deploy a pod to encapsulate our application, a service to expose it internally or externally, and a secret to securely store sensitive information such as passwords or API keys. These YAML files will reference the Docker image stored in GitLab's container registry, ensuring that the latest version of our application is deployed consistently across our Kubernetes environment.
 
 # To obtain the Manifest 
@@ -198,6 +221,9 @@ microk8s kubectl apply -f svc.yaml <to check whether is able to deploy in K8S cl
 
 By leveraging GitLab's robust CI/CD capabilities in tandem with Microk8s Kubernetes clusters, we can streamline the deployment process, enhance scalability, and maintain agility in our development workflows. 
 
+![K8S-yaml_file](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/96b1bb29-ebde-437e-b098-4ab95297eec9)
+
+
 ```
 deploy_server:
 stage: deploy
@@ -215,5 +241,14 @@ script:
 - kubectl get svc
 ```
 
+![k8s-1](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/134a7dfa-9a69-4755-b65d-f5b9de3a3fda)
+
+![k8s-2](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/65fa9447-1965-4296-a8e0-277cfe465bf9)
+
 Join us on this journey as we dive into the intricacies of deploying containerized applications to Kubernetes using GitLab agents and YAML configuration files, empowering you to harness the full potential of modern DevOps practices.
+
+![output](https://github.com/sambathkumarj/GitOps--Gitlab_Kubernetes/assets/42794636/ddc0fc53-b3c2-4f1d-99f2-4867520a5955)
+
+
+
 
